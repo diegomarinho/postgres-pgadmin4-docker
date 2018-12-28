@@ -23,7 +23,7 @@ SERVER_PORT=5050
 ## Executando Local ##
 Baixe o script `setup.sh` e execute os seguintes comandos no seu terminal:
 ```bash
-$ sudo sh setup.sh
+$ sudo sh setup-postgres.sh
 ```
 
 ## Navegador  ##
@@ -34,7 +34,7 @@ E-mail: sas@sulamerica.com.br
 Password: sas123456
 ```
 
-* Adicione um servidor usando:
+3. Adicione um servidor no PgAdmin usando as seguintes informacoes:
 ```bash
 Hostname: postgres
 Username: sas
@@ -42,25 +42,61 @@ Password: sas123
 ```
 
 ### MANUTENÇÃO ###
-Parar de executar o PostgreSQL 10 e o pgAdmin 4, você pode usar o seguinte comando:
+Comando para `Parar` o PostgreSQL 10 e o pgAdmin 4:
 ```bash
 $ docker stop postgres pgadmin4
 ```
 
-Iniciar novamente o PostgreSQL 10 e o pgAdmin 4, você pode executar:
+Comando para `start` do PostgreSQL 10 e o pgAdmin 4:
 ```bash
 $ docker start postgres pgadmin4
 ```
 
-Remover seus contêineres PostgreSQL 10 e pgAdmin 4, primeiro deverá interromper a execução dos contêineres e usar o seguinte comando:
+Comando para `Remover` os contêineres PostgreSQL 10 e pgAdmin 4:
 ```bash
 $ docker rm postgres pgadmin4
 ```
-
-Depois de executar o comando anterior, se você quiser recriar seus contêineres PostgreSQL 10 e pgAdmin 4, poderá fazê-lo com o comando `docker run` definido anteriormente.
-Se você fizer referência aos volumes que foram criados disponíveis, seus dados anteriores ainda estarão disponíveis.
-Isso é muito útil se você estiver atualizando suas imagens do PostgreSQL 10 e pgAdmin 4 para usar imagens mais recentes.
-
+Comando para `recriar` os contêineres PostgreSQL 10 e pgAdmin 4:
+```bash
+$ sudo sh setup-postgres.sh
+```
 
 ### Fonte ###
 https://info.crunchydata.com/blog/easy-postgresql-10-and-pgadmin-4-setup-with-docker
+
+---
+
+# Montando um ambiente Redis com Docker #
+
+##  Configure seu ambiente  ##
+Comando para `criar` uma instancia do Redis:
+```bash
+$ sudo sh setup-redis.sh
+```
+
+Comando para `criar` a instancia do Redis:
+```bash
+$ sudo sh start-redis.sh
+```
+
+Usando o comando `docker ps -a`, podemos ver o contêiner em execução
+```bash
+$ docker ps -a
+```
+
+```bash
+CONTAINER ID        IMAGE                                             COMMAND                  CREATED             STATUS                           PORTS               NAMES
+a3adecb5c143        redis:4.0.8-alpine                                "docker-entrypoint.s…"   9 seconds ago       Up 2 seconds                     6379/tcp            test_redis.1.669erimcccj4899ihvy95ljna
+```
+
+Podemos até acessar a instância do Redis de fora usando o comando `docker exec` para executar o cliente `redis-cli` via linha de comando.
+Precisamos fornecer o `CONTAINER ID` que vimos utilizando o camando anterior.
+```bash
+$ docker exec -it a3adecb5c143 redis-cli
+127.0.0.1:6379>
+```
+
+Comando para `Parar` a instancia do Redis:
+```bash
+$ docker sh stop-redis.sh
+```
